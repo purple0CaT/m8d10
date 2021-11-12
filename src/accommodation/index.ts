@@ -1,9 +1,10 @@
 import express from "express";
-import { hostOnlyMiddleware } from "../authorization/hostMiddleware.js";
-import { JWTAuthMiddleware } from "../authorization/token.js";
-import accommodationSchema from "./accommodationSchema.js";
-
-import accommodation from "./accommodationSchema.js";
+import createHttpError from "http-errors";
+import { hostOnlyMiddleware } from "../authorization/hostMiddleware";
+import { JWTAuthMiddleware } from "../authorization/token";
+import accommodationSchema from "./accommodationSchema";
+//
+//
 
 const accommodationRouter = express.Router();
 
@@ -13,7 +14,7 @@ accommodationRouter.get("/", JWTAuthMiddleware, async (req, res, next) => {
 
     res.send(getAccommodations);
   } catch (error) {
-    next(error);
+    next(createHttpError(500));
   }
 });
 
@@ -29,10 +30,10 @@ accommodationRouter.get(
       if (getAccommodations) {
         res.send(getAccommodations);
       } else {
-        next(404, "Accommodation not found!");
+        next(createHttpError(404, "Accommodation not found!"));
       }
     } catch (error) {
-      console.log(error);
+      next(createHttpError(500));
     }
   }
 );
@@ -41,7 +42,7 @@ accommodationRouter.post(
   "/",
   JWTAuthMiddleware,
   hostOnlyMiddleware,
-  async (req, res, next) => {
+  async (req: any, res, next) => {
     try {
       const createdAccommodation = await accommodationSchema.create({
         ...req.body,
@@ -50,7 +51,8 @@ accommodationRouter.post(
 
       res.send(createdAccommodation);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      next(createHttpError(500));
     }
   }
 );

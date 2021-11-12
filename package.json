@@ -2,11 +2,12 @@
   "name": "m8-05",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon -e js -r dotenv/config ./src/server.js"
+    "test": "jest",
+    "watch": "jest --watchAll",
+    "dev": "ts-node-dev ./src",
+    "start": "node ./build"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,17 @@
   },
   "homepage": "https://github.com/geuryroustand/M8-05#readme",
   "dependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/cookie-parser": "^1.4.2",
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/express-list-endpoints": "^6.0.0",
+    "@types/http-errors": "^1.8.1",
+    "@types/jsonwebtoken": "^8.5.5",
+    "@types/mongoose": "^5.11.97",
+    "@types/passport": "^1.0.7",
+    "@types/passport-facebook": "^2.1.11",
+    "@types/passport-google-oauth20": "^2.0.11",
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
@@ -33,7 +45,12 @@
     "passport-google-oauth20": "^2.0.0"
   },
   "devDependencies": {
+    "@types/jest": "^27.0.2",
     "dotenv": "^10.0.0",
-    "nodemon": "^2.0.14"
+    "jest": "^27.3.1",
+    "nodemon": "^2.0.14",
+    "ts-jest": "^27.0.7",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.4.4"
   }
 }

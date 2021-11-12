@@ -1,10 +1,7 @@
 import express from "express";
-import createHttpError from "http-errors";
-import passport from "passport";
-import UserSchema from "./schema.js";
-import { hostOnlyMiddleware } from "../authorization/hostMiddleware.js";
-import { JWTAuthMiddleware } from "../authorization/token.js";
-import { JWTAuth } from "../authorization/tokenAuth.js";
+import accommodationSchema from "../accommodation/accommodationSchema";
+import { hostOnlyMiddleware } from "../authorization/hostMiddleware";
+import { JWTAuthMiddleware } from "../authorization/token";
 
 const userRoute = express.Router();
 

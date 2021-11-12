@@ -1,4 +1,9 @@
 import express from "express";
+import createHttpError from "http-errors";
+import { JWTAuth } from "./tokenAuth";
+import UserSchema from "../user/schema";
+//
+process.env.TS_NODE_DEV && require("dotenv").config();
 const registerRoute = express.Router();
 
 registerRoute.post("/register", async (req, res, next) => {
@@ -12,12 +17,12 @@ registerRoute.post("/register", async (req, res, next) => {
       //
       res.cookie("accessToken", accessToken, {
         httpOnly: true,
-        secure: (process.env.NODE_ENV = "production" ? true : false),
+        // secure: (process.env.NODE_ENV! = "production" ? true : false),
         sameSite: "none",
       });
       res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
-        secure: (process.env.NODE_ENV = "production" ? true : false),
+        // secure: (process.env.NODE_ENV! = "production" ? true : false),
         sameSite: "none",
       });
       res.send({ nUser, accessToken, refreshToken });
