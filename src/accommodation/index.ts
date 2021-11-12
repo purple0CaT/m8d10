@@ -22,11 +22,11 @@ accommodationRouter.get(
   "/:accMoId",
   JWTAuthMiddleware,
   async (req, res, next) => {
+    // console.log(req.params.accMoId);
     try {
       const getAccommodations = await accommodationSchema.findById(
         req.params.accMoId
       );
-
       if (getAccommodations) {
         res.send(getAccommodations);
       } else {
@@ -48,11 +48,30 @@ accommodationRouter.post(
         ...req.body,
         host: req.user._id,
       });
-
+      // console.log(createdAccommodation);
       res.send(createdAccommodation);
     } catch (error) {
       // console.log(error);
-      next(createHttpError(500));
+      next(createHttpError(400, "Wrong accomodations"));
+    }
+  }
+);
+accommodationRouter.put(
+  "/:accMoId",
+  JWTAuthMiddleware,
+  hostOnlyMiddleware,
+  async (req: any, res, next) => {
+    try {
+      const updateAcc = await accommodationSchema.findByIdAndUpdate(
+        req.params.accMoId,
+        req.body,
+        { new: true }
+      );
+      // console.log(createdAccommodation);
+      res.status(204).send(updateAcc);
+    } catch (error) {
+      // console.log(error);
+      next(createHttpError(400, "Wrong accomodations"));
     }
   }
 );

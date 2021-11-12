@@ -8,9 +8,7 @@ import googleStrategy from "./authorization/google";
 import loginRoute from "./authorization/login";
 import registerRoute from "./authorization/register";
 import {
-  catchAllHandler,
-  forbiddenHandler,
-  unauthorizedHandler
+  catchAllHandler, generalErrHandl
 } from "./errorHadlers";
 import userRoute from "./user/user";
 
@@ -33,7 +31,7 @@ server.use("/login", loginRoute);
 server.use("/register", registerRoute);
 
 server.use("/accommodation", accommodationRouter);
-server.use(unauthorizedHandler);
-server.use(forbiddenHandler);
+// 
+server.use(generalErrHandl);
 server.use(catchAllHandler);
 //
