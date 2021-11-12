@@ -1,12 +1,12 @@
 import express from "express";
 import createHttpError from "http-errors";
-import { JWTAuth } from "./tokenAuth";
 import UserSchema from "../user/schema";
+import { JWTAuth } from "./tokenAuth";
 //
 process.env.TS_NODE_DEV && require("dotenv").config();
 const registerRoute = express.Router();
 
-registerRoute.post("/register", async (req, res, next) => {
+registerRoute.post("/", async (req, res, next) => {
   try {
     const user = await UserSchema.findOne({ email: req.body.email });
     if (!user) {
@@ -25,12 +25,13 @@ registerRoute.post("/register", async (req, res, next) => {
         // secure: (process.env.NODE_ENV! = "production" ? true : false),
         sameSite: "none",
       });
-      res.status(201).send({ accessToken, refreshToken });
+      res.status(201).send({ user: nUser, accessToken, refreshToken });
     } else {
-      next(createHttpError(401, "User already exists or invalid inputs"));
+      next(createHttpError(401, "User already exists or not valid credentials"));
     }
   } catch (error) {
-    next(createHttpError(500));
+    console.log(error);
+    next(createHttpError(500, { error }));
   }
 });
 

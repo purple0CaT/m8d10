@@ -1,11 +1,10 @@
+import dotenv from "dotenv";
 import passport from "passport";
 import { Strategy } from "passport-facebook";
-import { JWTAuth } from "./tokenAuth";
 import UserSchema from "../user/schema";
-import dotenv from "dotenv";
+import { JWTAuth } from "./tokenAuth";
 dotenv.config();
-// import passportFacebook from "passport-facebook";
-// const FBS = passportFacebook.Strategy;
+
 const FBStrategy = new Strategy(
   {
     clientID: process.env.FACEBOOK_APP_ID!,

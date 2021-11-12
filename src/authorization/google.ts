@@ -1,8 +1,8 @@
+import dotenv from "dotenv";
 import passport from "passport";
 import { Strategy } from "passport-google-oauth20";
-import { JWTAuth } from "./tokenAuth";
 import UserSchema from "../user/schema";
-import dotenv from "dotenv";
+import { JWTAuth } from "./tokenAuth";
 dotenv.config();
 
 //

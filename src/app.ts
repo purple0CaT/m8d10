@@ -10,7 +10,7 @@ import registerRoute from "./authorization/register";
 import {
   catchAllHandler,
   forbiddenHandler,
-  unauthorizedHandler,
+  unauthorizedHandler
 } from "./errorHadlers";
 import userRoute from "./user/user";
 
