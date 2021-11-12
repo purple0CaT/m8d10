@@ -1,12 +1,15 @@
 import passport from "passport";
-import GoogleStrategy from "passport-google-oauth20";
-import { JWTAuth } from "./tokenAuth.js";
-import UserSchema from "../user/schema.js";
+import { Strategy } from "passport-google-oauth20";
+import { JWTAuth } from "./tokenAuth";
+import UserSchema from "../user/schema";
+import dotenv from "dotenv";
+dotenv.config();
+
 //
-const googleStrategy = new GoogleStrategy(
+const googleStrategy = new Strategy(
   {
-    clientID: process.env.GOOGLE_OAUTH_ID,
-    clientSecret: process.env.GOOGLE_OAUTH_SECRET,
+    clientID: process.env.GOOGLE_OAUTH_ID!,
+    clientSecret: process.env.GOOGLE_OAUTH_SECRET!,
     callbackURL: `${process.env.B_URL}/login/redirectGoogle`,
   },
   async function (accessToken, refreshToken, profile, passNext) {

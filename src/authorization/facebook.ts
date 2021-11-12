@@ -1,12 +1,15 @@
 import passport from "passport";
-import FaceBookStrategy from "passport-facebook";
-import { JWTAuth } from "./tokenAuth.js";
-import UserSchema from "../user/schema.js";
-// StrategyOptionWithRequest VerifyFunction
-const FBStrategy = new FaceBookStrategy(
+import { Strategy } from "passport-facebook";
+import { JWTAuth } from "./tokenAuth";
+import UserSchema from "../user/schema";
+import dotenv from "dotenv";
+dotenv.config();
+// import passportFacebook from "passport-facebook";
+// const FBS = passportFacebook.Strategy;
+const FBStrategy = new Strategy(
   {
-    clientID: process.env.FACEBOOK_APP_ID,
-    clientSecret: process.env.FACEBOOK_APP_SECRET,
+    clientID: process.env.FACEBOOK_APP_ID!,
+    clientSecret: process.env.FACEBOOK_APP_SECRET!,
     callbackURL: `${process.env.B_URL}/login/redirectFB`,
   },
   async function (
@@ -16,7 +19,7 @@ const FBStrategy = new FaceBookStrategy(
     passNext: any
   ) {
     const user = await UserSchema.findOne({ fbId: profile.id });
-    console.log(profile);
+    // console.log(profile);
     if (user) {
       const tokens = await JWTAuth(user);
       user.refreshToken = tokens.refreshToken;

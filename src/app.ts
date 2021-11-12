@@ -3,6 +3,8 @@ import cors from "cors";
 import express from "express";
 import passport from "passport";
 import accommodationRouter from "./accommodation/index";
+import FBStrategy from "./authorization/facebook";
+import googleStrategy from "./authorization/google";
 import loginRoute from "./authorization/login";
 import registerRoute from "./authorization/register";
 import {
@@ -15,8 +17,8 @@ import userRoute from "./user/user";
 export const server = express();
 
 //***********MIDDLEWARES ********************** */
-// passport.use("facebook", FBStrategy);
-// passport.use("google", googleStrategy);
+passport.use("facebook", FBStrategy);
+passport.use("google", googleStrategy);
 
 server.use(cors());
 server.use(express.json());

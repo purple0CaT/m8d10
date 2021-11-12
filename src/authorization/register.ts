@@ -25,9 +25,9 @@ registerRoute.post("/register", async (req, res, next) => {
         // secure: (process.env.NODE_ENV! = "production" ? true : false),
         sameSite: "none",
       });
-      res.send({ nUser, accessToken, refreshToken });
+      res.status(201).send({ accessToken, refreshToken });
     } else {
-      next(createHttpError(401, "User already exists"));
+      next(createHttpError(401, "User already exists or invalid inputs"));
     }
   } catch (error) {
     next(createHttpError(500));
