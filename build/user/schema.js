@@ -51,7 +51,7 @@ UserSchema.methods.toJSON = function () {
     delete userObj.refreshToken;
     return userObj;
 };
-UserSchema.statics.checkCred = async function (email, pass) {
+UserSchema.statics.checkCredentials = async function (email, pass) {
     const user = await this.findOne({ email });
     if (user) {
         const isMatch = await bcrypt_1.default.compare(pass, user.password);

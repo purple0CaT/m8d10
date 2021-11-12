@@ -5,10 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.JWTRefreshAuth = exports.verifyRefreshJWT = exports.verifyJWT = exports.JWTAuth = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const schema_js_1 = __importDefault(require("../user/schema.js"));
+const schema_1 = __importDefault(require("../user/schema"));
 const http_errors_1 = __importDefault(require("http-errors"));
-const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
+process.env.TS_NODE_DEV && require("dotenv").config();
 const JWTAuth = async (user) => {
     const accessToken = await generateToken({ _id: user._id });
     const refreshToken = await generateRefreshToken({ _id: user._id });
@@ -47,7 +46,7 @@ exports.verifyRefreshJWT = verifyRefreshJWT;
 // create NEW TOKENS USING REFRESH TOKEN
 const JWTRefreshAuth = async (refToken) => {
     const decodedToken = await (0, exports.verifyRefreshJWT)(refToken);
-    const user = await schema_js_1.default.findById(decodedToken._id);
+    const user = await schema_1.default.findById(decodedToken._id);
     if (!user)
         throw (0, http_errors_1.default)(404, "User not found!");
     if (user.refreshToken === refToken) {

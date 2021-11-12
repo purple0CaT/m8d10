@@ -13,11 +13,11 @@ const accommodationSchema = new Schema({
     host: [{ type: Schema.Types.ObjectId, ref: "User" }],
     description: {
         type: String,
-        required: [true, "A description is required"],
+        required: [false, "A description is required"],
     },
     maxGuests: {
         type: Number,
-        required: [true, "Number of quest is required"],
+        required: [false, "Number of quest is required"],
         min: 1,
         max: 5,
         default: 1,
