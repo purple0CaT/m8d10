@@ -67,11 +67,28 @@ accommodationRouter.put(
         req.body,
         { new: true }
       );
-      // console.log(createdAccommodation);
+      // console.log(updateAcc);
       res.status(204).send(updateAcc);
     } catch (error) {
       // console.log(error);
-      next(createHttpError(400, "Wrong accomodations"));
+      next(createHttpError(404, "Wrong accomodations"));
+    }
+  }
+);
+accommodationRouter.delete(
+  "/:accMoId",
+  JWTAuthMiddleware,
+  hostOnlyMiddleware,
+  async (req: any, res, next) => {
+    try {
+      const updateAcc = await accommodationSchema.findByIdAndDelete(
+        req.params.accMoId
+      );
+      // console.log(updateAcc);
+      res.status(204).send();
+    } catch (error) {
+      // console.log(error);
+      next(createHttpError(404, "Wrong accomodations"));
     }
   }
 );

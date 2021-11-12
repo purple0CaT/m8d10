@@ -194,7 +194,7 @@ describe("Resource Endpoints | Hosts only", () => {
       .post("/accommodation")
       .send(validAccomodation)
       .set({ Authorization: `Bearer ${token}` });
-    // console.log(regAcc.body);
+    // True
     const putResp = await request
       .put(`/accommodation/${regAcc.body._id}`)
       .send({
@@ -202,8 +202,33 @@ describe("Resource Endpoints | Hosts only", () => {
         city: "TestYork",
       })
       .set({ Authorization: `Bearer ${token}` });
-    // console.log(putResp.body);
     expect(putResp.status).toBe(204);
+    // Error
+    const errResp = await request
+      .put(`/accommodation/618e9635183c0d1d2ea8asde`)
+      .send({
+        name: "Not Testy!",
+        city: "TestYork",
+      })
+      .set({ Authorization: `Bearer ${token}` });
+    expect(errResp.status).toBe(404);
+  });
+  it("Hosts allowed:  DELETE /accommodation/:id =>  204 if ok or 404 with invalid  ID", async () => {
+    const regAcc = await request
+      .post("/accommodation")
+      .send(validAccomodation)
+      .set({ Authorization: `Bearer ${token}` });
+    expect(regAcc.status).toBe(200);
+    // True
+    const delAcc = await request
+      .delete(`/accommodation/${regAcc.body._id}`)
+      .set({ Authorization: `Bearer ${token}` });
+    expect(delAcc.status).toBe(204);
+    // Error
+    const errAcc = await request
+      .delete("/accommodation/618e9635183c0d1d2ea8asde")
+      .set({ Authorization: `Bearer ${token}` });
+    expect(errAcc.status).toBe(404);
   });
   //============================
   afterAll((done) => {
